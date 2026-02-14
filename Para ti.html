@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para mi Princesa Belén</title>
+    <style>
+        :root {
+            --pink-light: #ffebf2;
+            --pink-medium: #ff85a1;
+            --pink-dark: #ff477e;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background: var(--pink-light);
+            font-family: 'Arial Rounded MT Bold', 'Helvetica', sans-serif;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        /* --- Contenedor del Osito --- */
+        .bear-container {
+            font-size: 80px;
+            position: relative;
+            margin-bottom: 20px;
+            animation: bounce 2s infinite;
+            cursor: pointer;
+        }
+
+        .heart-gift {
+            font-size: 40px;
+            position: absolute;
+            bottom: 0;
+            right: -10px;
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.3); }
+            100% { transform: scale(1); }
+        }
+
+        /* --- Texto --- */
+        h1 {
+            color: var(--pink-dark);
+            font-size: 2.2rem;
+            margin: 10px 20px;
+            text-shadow: 2px 2px white;
+            z-index: 10;
+        }
+
+        p {
+            color: #d32f2f;
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            z-index: 10;
+        }
+
+        /* --- Lluvia de Emojis --- */
+        .emoji-drop {
+            position: absolute;
+            top: -50px;
+            font-size: 25px;
+            user-select: none;
+            z-index: 1;
+            animation: fall linear forwards;
+        }
+
+        @keyframes fall {
+            to { transform: translateY(110vh) rotate(360deg); }
+        }
+
+        /* --- Botones --- */
+        .btn-group {
+            z-index: 10;
+            display: flex;
+            gap: 20px;
+        }
+
+        button {
+            padding: 15px 35px;
+            font-size: 1.3rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        #yes {
+            background: var(--pink-dark);
+            color: white;
+        }
+
+        #yes:hover {
+            transform: scale(1.1);
+            background: #ff0a54;
+        }
+
+        #no {
+            background: #ffffff;
+            color: var(--pink-medium);
+        }
+
+        /* --- Pantalla Final --- */
+        .success-screen {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--pink-light);
+            z-index: 100;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bear-container" id="main-bear">
+        🐻
+        <div class="heart-gift">💝</div>
+    </div>
+
+    <h1>¡Princesa Belen! 👑</h1>
+    <p>¿Quieres ser mi San Valentín<br>e ir a la playita? 🏖️🌊</p>
+
+    <div class="btn-group">
+        <button id="yes" onclick="celebrate()">¡SÍ, ACEPTO! 💖</button>
+        <button id="no" onmouseover="runAway()">No 🥺</button>
+    </div>
+
+    <div id="success" class="success-screen">
+        <div style="font-size: 100px;">🐻❤️✨</div>
+        <h1 style="font-size: 3rem;">¡SIII! Nos vamos a la playita 🏖️</h1>
+        <p>Sabia que aceptarias, Princesa Belen. Prepárate para el sol y el mar. 🌊☀️</p>
+        <div style="font-size: 50px;">🌸🌷🌺🌹</div>
+    </div>
+
+    <script>
+        // Función para crear lluvia de flores y corazones
+        function createEmoji() {
+            const emojis = ['🌸', '🌷', '🌺', '🌹', '💖', '✨', '🌻'];
+            const e = document.createElement('div');
+            e.classList.add('emoji-drop');
+            e.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+            e.style.left = Math.random() * 100 + 'vw';
+            e.style.animationDuration = (Math.random() * 3 + 2) + 's';
+            e.style.opacity = Math.random();
+            document.body.appendChild(e);
+
+            setTimeout(() => e.remove(), 5000);
+        }
+
+        setInterval(createEmoji, 200);
+
+        // El botón "No" huye
+        function runAway() {
+            const btn = document.getElementById('no');
+            const x = Math.random() * (window.innerWidth - btn.offsetWidth);
+            const y = Math.random() * (window.innerHeight - btn.offsetHeight);
+            btn.style.position = 'absolute';
+            btn.style.left = x + 'px';
+            btn.style.top = y + 'px';
+        }
+
+        // Celebración final
+        function celebrate() {
+            document.getElementById('success').style.display = 'flex';
+            // Lluvia masiva de flores
+            setInterval(createEmoji, 50);
+        }
+    </script>
+</body>
+</html>
